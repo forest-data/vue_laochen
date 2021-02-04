@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../vue.js" type="text/javascript" charset="UTF-8"></script>
+		<style>
+			#login{
+				background: slateblue;
+			}
+			#register{
+				background: palevioletred;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 视图 -->
+		<div id="app"> 
+			<h1>{{msg}}</h1>
+			<!-- 一次性插入，不在修改 -->
+			<h1 v-once>{{msg}}</h1>
+			<!-- 语义的内容做一个文本显示 -->
+			<h1>{{htmlTxt}}</h1>
+			<!-- 插入html内容 -->
+			<h1 v-html="htmlTxt"></h1>
+			
+			<!-- 绑定动态属性 -->
+			<div :id="idname">
+				<h1>登录</h1>
+			</div>
+			<!-- 绑定动态属性， 全写 -->
+			<div v-bind:id="idname">
+				<h1>登录</h1>
+			</div>
+			
+			<!-- 模板语言表达式应用 -->
+			<div>
+				{{firstname + lastname}}
+			</div>
+			
+			<!-- 三元运算符 -->
+			<div >
+				{{isVip? '欢迎光临': '走开'}}
+			</div>
+			
+			<!-- 事件的绑定 -->
+			<button v-on:click="changeBg">改变背景颜色</button>
+			<button @click="changeBg">改变背景颜色</button>
+		</div>
+		
+		<script type="text/javascript"> 
+			var app = new Vue({
+				el: "#app",
+				// Model 
+				data:{
+					msg: 'Hello', 
+					htmlTxt: '<span>hello</span>',
+					idname: "login",
+					firstname: 'S',
+					lastname:'F',
+					isVip:true
+					
+				},
+				methods:{
+					changeBg:function(){
+						document.body.style.background = 'skyblue'
+					}
+				}
+			}) 
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<!-- 视图 -->
+		<div id="app"> 
+			<!-- 一般情况下写法: 不管改了没改，都会将这两个值进行计算 -->
+			<h1>{{firstname + lastname}}</h1>
+			<!-- 计算属性 -->
+			<h1>{{fullname}}</h1>
+			
+			<!-- 显示1个单词的逆序 -->
+			<h1>{{word.split('').reverse().join('')}}</h1>
+			<h1>{{reverseWord}}</h1>
+			
+			<ul>
+				<li v-for="item,index in oddStudents">
+					<h3>{{item.studentName}}</h3>
+					<h3>{{item.age}}--{{item.school}}</h3>
+				</li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">
+			console.log(Vue)
+			let app = new Vue({
+				el: "#app",
+				// Model
+				data:{
+					firstname: '张',
+					lastname: '三',
+					word: 'music',
+					students:[
+						{
+							studentName: '小明',
+							age: 15,
+							school: '清华',
+							imgheader: "http://i.serengeseba.com/uploads/i_1_3682329608x2525429619_26.jpg"
+						},
+						{
+							studentName: '小红',
+							age: 18,
+							school: '北大',
+							imgheader: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi2.w.yun.hjfile.cn%2Fdoc%2F201303%2Fd5547c74-d9ad-4625-bd93-41c2817f1dff_03.jpg&refer=http%3A%2F%2Fi2.w.yun.hjfile.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614404874&t=fab274929d5169396458e0ac716e4030"
+						},
+						{
+							studentName: '小黑',
+							age: 17,
+							school: '浙大',
+							imgheader: "https://cn.vuejs.org/images/imooc-sponsor2.png"
+						},						
+					],
+				},
+				//计算属性
+				computed:{
+					fullname:function(){
+						// console.log(this) //this指向app
+						//会将计算的结果进行缓存,只要this.firstname 和 this.lastname内容不改变,就不会重新计算
+						return this.firstname + this.lastname
+					},
+					reverseWord:function(){
+						return this.word.split('').reverse().join('')
+					},
+					
+					oddStudents_:function(){
+						//箭头函数
+						let results = this.students.filter((item,i)=>{
+							return item.age%2==0
+						})
+						return results
+					},
+					
+					oddStudents:function(){
+						// 匿名函数   
+						let results = this.students.filter(
+							function(item, i){
+								return item.age%2==0
+							}
+						)
+						// console.log(results)
+						return results
+					},
+					
+				}
+			}) 
+		</script>
+		
+	</body>
+</html>

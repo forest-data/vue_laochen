@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../vue.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<!-- 视图 -->
+		<div id="app">
+			<h3>明显列表</h3>
+			<ul>
+				<li v-for="item in starts">
+					{{item}}
+				</li>
+			</ul>
+			
+			<h3>学生列表</h3>
+			<ul>
+				<li v-for = "item in students">
+					<h4>名字: {{item.studentName}}</h4>
+					<p>年龄: {{item.age}} -- 学习: {{item.school}}</p>
+				</li>
+			</ul>
+			
+			
+			<h3>学生列表(带索引)</h3>
+			<ul>
+				<li v-for = "item,key in students">
+					<h4>索引值: {{key}} -- 名字: {{item.studentName}}</h4>
+					<p>年龄: {{item.age}} -- 学习: {{item.school}}</p>
+				</li>
+			</ul>
+			
+			<h3>循环对象</h3>
+			<ul>
+				<li v-for = "item,key in students[0]">{{key}}---{{item}}</li>
+			</ul>
+			
+			<!-- <img :src="students[0].imgheader" /> -->
+			
+			<h3>条件 + 循环渲染 (将偶数年龄的学生渲染出来) 先循环后渲染</h3>
+			
+			<ol>
+				<li v-for="item,index in students" v-if="item.age%2!=0" :key="index">
+					<h4>索引值: {{index}} -- 名字: {{item.studentName}}</h4>
+					<p>年龄: {{item.age}} -- 学习: {{item.school}}</p>
+					<img :src="item.imgheader" />
+				</li>
+			</ol>
+			
+			<hr>
+			
+			<h1>为什么li循环哪里需要加 key ? 因为要告知vue,每一个对象都是独一无二的。如果不告诉vue就懒加载，就是针对值的改变</h1>
+			
+			<div v-if="isLogin" class="login" key="login">
+				<h3>登录</h3>
+				<div>
+					用户名：
+					<input type="text" name="username" value="" />
+				</div>
+				<div>
+					密码：
+					<input type="password" name="password" value="" />
+				</div>
+				<button>登陆</button>
+			</div>
+			
+			<div v-else class="register" key="register">
+				<h3>注册</h3> 
+				<div>
+					用户名：
+					<input type="text" name="username" value="" />
+				</div>
+				<div>
+					密码：
+					<input type="password" name="password" value="" />
+				</div>
+				<button>注册</button>
+			</div>
+			
+			<button @click="togglePage" type="button">切换登录注册页</button>
+			
+			<div v-if="loginType==='username'">
+				<label>Username</label>
+				<input placeholder="Enter your username" />
+			</div>
+			<div v-else>
+				<label>Email</label>
+				<input placeholder="Enter your email" />
+			</div>
+		</div>
+		
+		<script type="text/javascript"> 
+			let app = new Vue({
+				el: "#app",
+				// Model
+				data:{
+					starts: ['A', 'B', '蔡徐坤', '苏有朋', 'Baby'],
+					students:[
+						{
+							studentName: '小明',
+							age: 15,
+							school: '清华',
+							imgheader: "http://i.serengeseba.com/uploads/i_1_3682329608x2525429619_26.jpg"
+						},
+						{
+							studentName: '小红',
+							age: 18,
+							school: '北大',
+							imgheader: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi2.w.yun.hjfile.cn%2Fdoc%2F201303%2Fd5547c74-d9ad-4625-bd93-41c2817f1dff_03.jpg&refer=http%3A%2F%2Fi2.w.yun.hjfile.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614404874&t=fab274929d5169396458e0ac716e4030"
+						},
+						{
+							studentName: '小黑',
+							age: 17,
+							school: '浙大',
+							imgheader: "https://cn.vuejs.org/images/imooc-sponsor2.png"
+						},						
+					],
+					
+					isLogin: true,
+					loginType: 'username'
+				},
+				methods:{
+					togglePage:()=>{
+						app.isLogin = !app.isLogin;
+					}
+				}
+			}) 
+		</script>
+		
+	</body>
+</html>
